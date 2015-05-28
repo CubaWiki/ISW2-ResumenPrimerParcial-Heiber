@@ -1,0 +1,449 @@
+\documentclass[a4paper,spanish]{article}
+
+\usepackage[spanish,activeacute]{babel}
+\usepackage{moreverb}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{multicol}
+
+\oddsidemargin 0in
+\textwidth 6.2in
+\topmargin 0in
+\addtolength{\topmargin}{-.5in}
+\textheight 10in
+\parskip=1ex
+\pagestyle{fancy}
+%usar el segundo nivel de enumeracion con letras
+%\renewcommand{\labelenumii}{\alph{enumii}. }
+
+\newcommand{\rev}[0]{\marginpar{REVISAR}}
+\newcommand{\nohecho}[0]{\marginpar{NO HECHO}}
+
+\newcommand{\tab}[0]{\hspace*{0.5cm}}
+
+%noindent en todos lados
+\parindent=0in 
+
+\lhead{Ingenier\'ia de Software II}
+\rhead{Apunte de repaso primer parcial}
+
+\cfoot{$\thepage$ de \pageref{theend}}
+
+
+\begin{document}
+
+Disclaimer: Este apunte no es autocontenido y fue pensado como un repaso de los conceptos, 
+no para aprenderlos de aqu'i directamente.
+\begin{multicols}{2}
+\tableofcontents
+\end{multicols}
+
+\section{Ingenier\'ia de software}
+
+$\neq$ programaci'on:
+\begin{itemize}
+\item 1 desarrollador vs equipo
+\item sistema simple vs complejo
+\item tiempo corto vs largo
+\item desarrollador = usuario vs stakeholders
+\item poco mantenimiento vs muchisimo
+\end{itemize}
+
+$\neq$ ciencias de la computaci'on: parte pr'actica, no te'orica. 
+La ISW se nutra de CS.
+
+No silver bullet: 4 dificultades esenciales
+\begin{itemize}
+\item Complejidad (no lineal con el tama~no)
+\item Conformidad (arbitrariedad)
+\item Facilidad de cambios
+\item Invisibilidad
+\end{itemize}
+
+\section{Modelos de ciclo de vida}
+
+Modelos de ciclo de vida: Representaci'on est'andar de etapas de desarrollo,
+orden relativo y criterios de transici'on.
+
+Sirve para planificar, elegirlo es una decisi'on cr'itica.
+
+Clave: \textbf{visibilidad}
+
+Plan = modelo + par'ametros (instanciarlo)
+
+$\Rightarrow$ un tradeoff entre rapidez, documentaci'on, calidad, visibilidad,
+riesgos, etc
+
+\begin{itemize}
+\item Cascada: Requerimientos, luego dise~no, luego implementaci'on 
+	(forward only)
+\item Cascada con prototipos: Igual, pero se van validando las etapas con
+	prototipos. Problema: El prototipo deber'ia tirarse por ser hecho sin
+	pensar en calidad y nunca se tira.
+\item Sashimi: Cascada con superposici'on de etapas.
+\item Cascada con subproyectos: Minicascadas dentro. Soluciona un poco del 
+	problema (subproyectos mas cortos $\Rightarrow$ el salto de salm'on es mas 
+	corto).
+\item Iterativo (hacer varias veces lo mismo) e incremental (producto crece a
+	medida que avanza el proyecto).
+\begin{itemize}
+\item UP, RUP
+\item SCRUM
+\end{itemize}
+\end{itemize}
+
+Requisitos inestables / producto novedoso $\Rightarrow$ iterativo \\
+Arquitectura compleja $\Rightarrow$ atacar riesgos desde el inicio \\
+Se puede hacer D\&C $\Rightarrow$ iteraciones mas cortas \\
+Complejidad en el negocio $\Rightarrow$ cuidar especificaci'on
+
+\section{Planificaci\'on}
+
+Gerenciamiento: Planificaci'on, staffing, control, liderazgo, organizaci'on
+
+Identificar stakeholders: Qui'en usa? Qui'en paga? Qui'en sabe? Qui'en quiere
+	que exista? Qui'en es factor de decisi'on para que exista? \\
+\tab Claves: sponsor, lider usuario, usuarios directos e indirectos (gente 
+	afectada)
+
+Driver: Algo extra'ido de la realidad que dirige el desarrollo. Qu'e tengo
+	que intentar optimizar. \\
+Restricci'on: Algo que restinge las posibilidades del proyecto. \\
+Grado de libertad: Contrario a restricci'on.
+
+Todos se aplican a: Funcionalidad - Calidad - Recursos - Costo - Plazo
+
+Plan += alcance, requerimientos iniciales, QAs
+
+Estimaci'on: Mejora seg'un avanza el proyecto \\
+\tab Falla: Optimismo, poca seriedad, no se recuerda bien la experiencia, 
+	novedad (falta de experiencia), mala administraci'on de requerimientos
+	
+\textbf{Estimo | Mido | Registro | Comparo | Analizo | Calibro | Estimo}
+
+>Qu'e estimo? Tama~no, esfuerzo, costo \\
+M'etodos de estimaci'on:
+\begin{itemize}
+\item Algor'itmico: Puntos de funci'on, de objeto, de CU + factores de ajuste
+\item Emp'iricos: A ojo, basados en experiencia (proys similares)
+\item Wideband delphi (reuni'on convergente)
+\end{itemize}
+
+Work Breakdown Structures (WBS): D\&C primero para estimar cosas mas chicas
+\begin{itemize}
+\item De proceso: Root=proyecto, nodos son tareas
+\item De producto: Root=producto, items de software, hardware y datos
+\item H'ibrida: Proceso cerca del root, se torna producto llegando a las hojas
+\end{itemize}
+
+Dependencias entre tareas (no solo del tipo ``fin a comienzo'') determinan
+	dinamicamente las fechas de las tareas. Hitos: Tareas de duraci'on 0. \\
+\textbf{<Hay dependencias hacia afuera del proyecto!} con otros procesos de la
+empresa que tengan impacto (stakeholders) \\
+Dependencias por contenci'on de recursos
+
+Gr'aficos de dependencias
+\begin{itemize}
+\item Gantt: Barras con fechas, respeta dependencias
+\item Pert/CPM: Grafo de dependencias, sirve para buscar camino cr'itico
+\end{itemize}
+
+Plan de gesti'on: Documento entregable
+
+L'inea de base: Versi'on freezada del plan, base para el seguimiento
+
+Avance: Peso a hitos entregables ($\neq$ tiempo, $\neq$ esfuerzo). 
+	Valor acumulado.
+	
+\section{Atributos de calidad (QA)}
+
+QA $\simeq$ reqs no funcionales, pero puede que se resuelvan con funcionalidad
+ (ej, configuraci'on)
+
+QAs influyen fuertemente la arquitectura, que debe asegurarlos
+
+QAs pueden contraponerse (ej: performance y flexibilidad)
+
+T'acticas de arquitectura: Sirven para asegurar QAs (no son un fin en si 
+	mismas)
+
+Especificaci'on: Reqs (funcionales) + QAs + restricciones
+
+Error $\Rightarrow$ defecto $\Rightarrow$ falla (observable por stakeholders)
+
+Primer nivel de taxonom'ia de QAs
+\begin{itemize}
+\item Disponibilidad: Proba de estar disponible = TiempoMedioHastaFalla /
+   (TiempoMedioHastaFalla + TiempoMedioReparaci'on). F'acil de especificar,
+   dificil de asegurar.
+\item Facilidad de cambios: >Qu'e puede cambiar? Funcionalidad, plataforma,
+	otro QA, interfase. >Qui'en lo cambia? Usuario, desarrollador, 
+	administrador (configuraci'on, c'odigo, par'ametros)
+\item Performance: Latencia, deadline, throughput, jitter, \#reqs no 
+	procesados. Dif'icil de expresar.
+\item Seguridad: Non-repudiation, confidencialidad, integridad, auditabilidad
+\item Facilidad de test: Test harness
+\item Usabilidad, escalabilidad, portabilidad
+\end{itemize}
+
+QAW (Quality Attributes Workshop): M'etodo del SEI que relaciona a los 
+	stakeholders para detectar QAs clave. Brainstorming de escenarios (de 
+	ellos se deriva el resto).
+
+\section{Arquitecturas}
+
+\subsection{Introducci\'on}
+
+Arquitectura: Elementos + relaci'on entre ellos + propiedades externamente 
+	visibles (interfase / minimo asumible por otros). \\
+\tab >Por qu'e? D\&C, plano sistema, comunicaci'on con stakeholders y equipo,
+	an'alisis temprano de QA
+
+Arq vs dise~no: Arq solo interfases. In the large.
+
+Diagramas: Orientado a datos, C\&C, cajas y flechas, capas, m'odulos, 
+	deployment.
+	
+Uso de la arquitectura
+\begin{itemize}
+\item Ingenieros de requerimientos: tradeoff entre reqs (QAs) en 
+	competencia
+\item Dise~nadores: tradeoff contenci'on de recursos y presupuesto
+\item Implementadores: Proveer restricciones y libertades (interfases)
+\item Testers/Integradores: Conocer comportamiento caja negra
+\item Soporte: an'alisis de impacto preliminar
+\item Dise~nadores de otros sistemas: conocer interfase
+\item Managers: plano para asignar, planificar y seguimiento
+\item Grupo QA: an'alisis de conformidad
+\item Gestor de configuraci'on: Organizar repositorios y SCM
+\end{itemize}
+
+Vistas: planos de la arquitectura, el sistema no es unidimensional
+
+Clave: detallar vistas relevantes y \textbf{vincularlas}. La relevancia 
+	depende del prop'osito. Cada vista expone $\neq$ QAs. \\
+\tab \emph{Ninguna vista es \textbf{la} arquitectura}.
+
+Estilos: cliente/servidor, capas, datos compartidos, pipe\&filter, 
+	publish\&subscribe \\
+\tab Forma de abordar con propiedades conocidas. Se pueden usar $\neq$ en 
+	$\neq$ partes del sistema. Hay que documentarlos. Pueden ser desde la 
+	forma de encarar la documentaci'on hasta una t'actica.
+	
+\section{Proceso Unificado (UP)}
+
+UML: Notaci'on est'andar (\textbf{no} es un proceso).
+
+UP: Proceso ``marco'' $\rightarrow$ se adapta a las caracter'isticas 
+	particulares del proyecto.
+\begin{itemize}
+\item Dirigido por CU
+\item Centrado en arquitectura (prioritaria siempre, refinamiento progresivo)
+\item Iterativo e incremental, los riesgos determinan la construcci'on 
+	(administraci'on de requerimientos)
+\item Iteraci'on resulta en un sistema (feedback de los usuarios)
+\item Time boxing (si no se llega, recortar funcionalidad)
+\end{itemize}
+
+Tipos de iteraci'on (fases)
+\begin{itemize}
+\item Inception: Establece \textbf{caso de negocio}. Especifica. Salidas: Caso
+	de negocio, criterios de 'exito, evaluaci'on inicial de riesgos, 
+	estimaci'on de recursos y requerimientos (10-20\%).
+\item Elaboration: An'alisis, base arq, atacar principales riesgos, plan. 
+	Salidas: Modelo de dominio y CU (80\%). Arq testeada y documentada. Caso
+	de negocio revisado. Plan de desarrollo.
+\item Construction: Especificaci'on, desarrollo y test incremental.
+\item Transition: Desarrollo, test e implementaci'on.
+\end{itemize}
+
+Hitos: Puntos de control para revisar el avance. Tiene entregables asociados\\
+\tab Principales: Fin de fase. Secundarios: Fin de iteraci'on.
+ 
+Disciplinas: Organizan actividades. De desarrollo: Requerimientos, an'alisis,
+	arquitectura, dise~no, implementaci'on, test, deploy. De gesti'on: 
+	Riesgos, plan, seguimiento, SCM. \\
+\tab Generan modelo UML que incluye diagramas.
+
+Artefactos: Informaci'on producida por el equipo (docs, c'odigo, etc).
+
+Workflow: Especifica proceso en t'erminos de actividades, artefactos y 
+	workers (con rol).
+	
+\# artefactos grandes $\Rightarrow$ definir cuales se hacen en un desarrollo
+	concreto. \\
+\tab artefacto inicial: caso de desarrollo. Decide justamente eso (para cada
+	artefacto cu'ando y d'onde se crea y se actualiza).
+
+Ejemplos de artefactos: Modelo CU, modelo de dominio, modelo de an'alisis, 
+	modelo de dise~no, de arquitectura, de test, de implementaci'on, 
+	prototipos, QA, glosario.
+	
+\section{Gesti\'on de riesgos}
+
+Riesgo: Problema que todav'ia no ocurri'o 
+	$<$probabilidad de que ocurra,impacto$>$. \\
+\tab Proba * impacto = exposici'on al riesgo.
+
+\begin{tabular}{ccccc}
+\textbf{Identificar} & \textbf{analizar} & \textbf{planificar} & 
+	\textbf{seguir} & \textbf{controlar} \\
+& & plan contingencia & cuantificar & ejecutar planes
+\end{tabular}
+
+Comunicar: Intercambiar info con todos para determinar tempranamente.
+
+Identificar: id $\rightarrow$ doc $\rightarrow$ doc contexto (fuente, 
+	relaciones). \\
+\tab M'etodos: Brainstorm, reporte peri'odico, cuestionario SEI, reportes
+	voluntarios, lista de riesgos comunes. \\
+\tab <Al avanzar el proyecto aparecen nuevos riesgos!
+
+Documentaci'on: Dado que [condici'on (fuente del riesgo)] $\Rightarrow$ 
+	(posiblemente) [impacto]
+	
+M'etodo de 3 niveles del SEI para priorizar la lista de riesgos. Probabilidad
+	e impacto con 3 niveles, cada combinaci'on tiene una prioridad.
+
+Aproximaci'on: Evitar, reducir probabilidad, reducir impacto (flowchart). 
+	Definir alcance y acciones de mitigaci'on. Definir mecanismos de tracking
+	(m'etricas que definen si el riesgo est'a ocurriendo).
+	
+Plan de contingencia: Medir impacto en el plan general. <Tiene que ser 
+	implementable!
+
+Riesgos comunes: Producto incrrecto (mal reqs), producto incorrectamente (mal
+	QAs), atrasos, costo muy alto.
+	
+\section{Estimaciones}
+
+<Siempre se puede estimar! aunque con cierto nivel de incertidumbre (baja a
+	medida que avanza el proyecto)
+\tab Mido a partir de la experiencia (mia o de otros, basado en similitudes
+	varias). Es la basa para trabajar.
+
+Problemas: Optimismo, falta de experiencia, omisi'on de tareas (si luego no se
+	hacen comprometen la calidad, si se hacen comprometen el cronograma)
+
+>Qu'e estimo? Tama~no, esfuerzo, costo, tiempo (problema: confundirlos!)
+
+M'etodos: Emp'iricos (ojo basado en experiencia), algor'itmicos, 
+	descomposici'on (D\&C). Combinaci'on de varios.
+	
+Clark: $E = \frac{O + 4M + P}{6}$. Elimina un poco sesgo optimista (la 
+	medici'on pesimista est'a mas lejos de la media que la optimista)
+
+Wideband delphi: Muchos estimadores. Estimaciones sucesivas revelando 
+	progresivamente informaci'on para que converjan. Termina por tiempo o 
+	desv'io aceptable.
+
+Puntos de funci'on: Contar entradas/salidas/consultas/archivos l'ogicos/
+	interfases. Ponderar por complejidad. Factores de ajuste (complejidades
+	grandes)
+	
+Puntos de objeto (no es POO!): obj = pantallas, reportes y m'odulos 
+	(ponderados). Es mas simple y considera el reuso, pero solo sirve para ABM
+	
+Puntos de CU: Peso CUs y actores ponderadamente. Muchos factores de ajuste.
+
+\section{Seguimiento}
+
+Definici'on de cronogramas: Divisi'on (D\&C), dependencias, asignaci'on de
+	tiempo y esfuerzo (fechas cumplen dependencias), responsabilidades, 
+	salidas de cada tarea, hitos (chequeo de salidas)
+
+Cronograma efectivo (Tomayko): Detalle de tareas \emph{y recursos (+dif'icil)},
+	compatible con planes que interfieran, hitos claros con entregables 
+	(permite evaluar completitud - seguimiento).
+
+Seguimiento: Proveer visibilidad a responsables del proyecto para reaccionar
+	 (relacion con riesgos). Mirar avance, esfuerzo, calidad (>est'a 
+	 \textbf{terminado}?)
+	
+Avance (valor acumulado): Peso a los hitos, subpeso a las subtareas que hacen
+	el hito. Sumo peso de un hito tarea cu'ando: est'a entregado, pas'o SQA,
+	fue aprobado por el cliente (puedo ir sumando porcentajes en cada uno de
+	esos).
+	
+Esfuerzo: Detectar desvios $\Rightarrow$ mejorar estimaci'on. Dividir por 
+	fase/tarea. Reporte de horas del personal (dif'icil). Es importante para
+	el \textbf{tracking de costo}.
+
+Tambi'en seguimiento de: riesgos, QA, proceso definido.
+
+No funciona: Recuperar al final, eliminar QA o test, eliminar requerimientos
+	sin acordar con el cliente, desatender integraci'on, mucha 
+	sobrededicaci'on. Se requiere asumir el problema de la estimaci'on y 
+	corregirlo correctamente.
+	
+Administraci'on de cambios: Hacerlos controladamente (importante en el SCM) \\
+\tab Especialmente administraci'on de requerimientos. \textbf{van} a cambiar,
+	estar preparado. Involucrar al usuario, comit'e de aprobaci'on, analizar
+	impacto, participan los que hicieron el an'alisis inicial (no olvidar
+	cosas anteriores).
+	
+Management: Liderazgo, delegaci'on.
+
+\section{Mejora de procesos (CMM)}
+	
+Proceso de desarrollo: \\
+\tab IEEE: secuencia de pasos con un prop'osito.
+\tab SEI: Conjunto de actividades, m'etodos, pr'acticas y transformaciones
+	para dearrollar y mantener software.
+
+Calidad de proceso $\Rightarrow$ calidad de producto
+
+Madurez de un proceso: Nivel de definici'on (calidad). Nivel de 
+	administraci'on, control y efectividad.
+	
+Capacidad de proceso: Rango de resultados a partir de seguirlo.
+
+``Software project performance'': Resultado real. Su varianza (ruido) debe
+	controlarse.
+
+Inmadura: Procesos improvisados en cada proyecto, no hay control de procesos,
+	m'as dependiente de las personas, menor visibilidad ($\Rightarrow$ menor
+	control). \\
+Madura: Procesos compartidos por todos, realistas (implementables!), 
+	actualizados continuamente, bien definidos, procesos sobreviven a las
+	personas.
+
+IDEAL: Initiating - Diagnosing - Establishing - Acting - Learning (forma de
+	implementar cambios)
+
+CMMi: Modelo, 5 niveles, cada nivel tiene temas que deben cumplirse para 
+	alcanzarlo. Se pueden usar pr'acticas de niveles superiores, pero deben
+	tenerse todas para alcanzarlo. \\
+\tab Mejoras incrementales: Cada nivel sirve para llegar al otro.
+
+CMMi continuo: Diferentes 'areas, un n'umero de valoraci'on por 'area. 
+	M'as flexible.
+
+CMMi: Evoluci'on del CMM (aprendizaje de a~nos), m'as best-practices, mejores
+	descripciones, cumple ISO 15504
+
+M'as madurez $\Rightarrow$ m'as visibilidad $\Rightarrow$ m'as capacidad de
+	control $\Rightarrow$ menor ruido
+	
+Cada nivel tiene Key Process Areas (KPAs) que hay que cumplir. Cada KPA tiene
+	objetivos y key practices organizadas en 5 secciones (common features).
+	
+SCAMPI (Standard CMMI Appraisal Method for Process Improvement)
+\begin{itemize}
+\item Clase A: (full) Foco en institucionalizaci'on. Otorga certificado.
+\item Clase B: Foco en deployment. 'Util previo a ciertos procesos.
+\item Clase C: Foco en approach. Eval'ua riesgos.
+\end{itemize}
+
+Niveles de CMMI
+\begin{enumerate}
+\item Inicial
+\item Managed
+\item Defined
+\item Quantitatively managed
+\item Optimizing
+\end{enumerate}
+
+\label{theend}
+\end{document}
+
